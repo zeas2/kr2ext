@@ -1,0 +1,954 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\tjs2">
+      <UniqueIdentifier>{097c9b59-b258-4a48-8ea1-027da3300460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\onig">
+      <UniqueIdentifier>{7bddcdc4-99f8-4eb6-bf88-c605a3bdc276}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\onig\enc">
+      <UniqueIdentifier>{567a33df-e02b-4b23-acef-cda9f326415a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libdisasm">
+      <UniqueIdentifier>{4011a294-1e7d-41c3-9adf-024cbf043d47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libjpeg">
+      <UniqueIdentifier>{8439ce4a-6695-48a6-88d0-7caca92c4edb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libpng">
+      <UniqueIdentifier>{faa63fac-1381-428e-9a36-838798d37510}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\zlib">
+      <UniqueIdentifier>{f2670c5b-eebe-4c84-bf49-825cbf8aac01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libwebp">
+      <UniqueIdentifier>{f8a196a1-0301-452a-8fe4-16f01852f977}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libwebp\utils">
+      <UniqueIdentifier>{de837bb7-6782-41cd-87ac-b442ae3c37fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libwebp\mux">
+      <UniqueIdentifier>{c865fdd1-8c59-4626-ade8-ffa1de7c3c75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libwebp\dsp">
+      <UniqueIdentifier>{ff47c083-b17e-4fa8-9ebb-63b9730dcc70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libwebp\demux">
+      <UniqueIdentifier>{596849b6-3a4d-4101-88e8-3c5acda7cac7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libwebp\dec">
+      <UniqueIdentifier>{f22d1026-a546-483c-8552-5639f490aef7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libwebp\enc">
+      <UniqueIdentifier>{05e291c1-cf9a-4825-8104-c7995cd0e77c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="tp_stub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="kr2ext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsNative.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsObject.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsObjectExtendable.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsOctPack.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjspp.tab.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsRandomGenerator.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsRegExp.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsScriptBlock.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsScriptCache.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsString.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsUtils.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsVariant.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsVariantString.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjs.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjs.tab.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsArray.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsBinarySerializer.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsByteCodeLoader.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsCompileControl.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsConfig.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsConstArrayData.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsDate.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsdate.tab.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsDateParser.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsDebug.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsDictionary.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsDisassemble.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsError.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsException.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsGlobalStringMap.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsInterCodeExec.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsInterCodeGen.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsInterface.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsLex.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsMath.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsMessage.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsMT19937ar-cok.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="tjs2\tjsNamespace.cpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\regcomp.c">
+      <Filter>Source Files\onig</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\regenc.c">
+      <Filter>Source Files\onig</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\regerror.c">
+      <Filter>Source Files\onig</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\regexec.c">
+      <Filter>Source Files\onig</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\regext.c">
+      <Filter>Source Files\onig</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\reggnu.c">
+      <Filter>Source Files\onig</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\regparse.c">
+      <Filter>Source Files\onig</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\regposerr.c">
+      <Filter>Source Files\onig</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\regposix.c">
+      <Filter>Source Files\onig</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\regsyntax.c">
+      <Filter>Source Files\onig</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\regtrav.c">
+      <Filter>Source Files\onig</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\regversion.c">
+      <Filter>Source Files\onig</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\st.c">
+      <Filter>Source Files\onig</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\euc_jp.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\euc_kr.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\euc_tw.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\gb18030.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\iso8859_1.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\iso8859_2.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\iso8859_3.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\iso8859_4.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\iso8859_5.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\iso8859_6.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\iso8859_7.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\iso8859_8.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\iso8859_9.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\iso8859_10.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\iso8859_11.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\iso8859_13.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\iso8859_14.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\iso8859_15.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\iso8859_16.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\koi8.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\koi8_r.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\mktable.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\sjis.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\unicode.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\utf8.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\utf16_be.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\utf16_le.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\utf32_be.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\utf32_le.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\ascii.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\big5.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="onig\enc\cp1251.c">
+      <Filter>Source Files\onig\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="libdisasm\ia32_insn.c">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="libdisasm\ia32_invariant.c">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="libdisasm\ia32_modrm.c">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="libdisasm\ia32_opcode_tables.c">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="libdisasm\ia32_operand.c">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="libdisasm\ia32_reg.c">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="libdisasm\ia32_settings.c">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="libdisasm\x86_disasm.c">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="libdisasm\x86_format.c">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="libdisasm\x86_imm.c">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="libdisasm\x86_insn.c">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="libdisasm\x86_misc.c">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="libdisasm\x86_operand_list.c">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="libdisasm\ia32_implicit.c">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsLoaderIntf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hook_init.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadTLG.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jaricom.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jcapimin.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jcapistd.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jcarith.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jccoefct.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jccolor.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jcdctmgr.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jchuff.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jcinit.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jcmainct.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jcmarker.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jcmaster.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jcomapi.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jcparam.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jcprepct.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jcsample.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jctrans.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdapimin.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdapistd.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdarith.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdatadst.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdatasrc.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdcoefct.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdcolor.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jddctmgr.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdhuff.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdinput.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdmainct.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdmarker.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdmaster.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdmerge.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdpostct.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdsample.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jdtrans.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jerror.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jfdctflt.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jfdctfst.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jfdctint.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jidctflt.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jidctfst.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jidctint.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jmemansi.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jmemmgr.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jquant1.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jquant2.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libjpeg\jutils.c">
+      <Filter>Source Files\libjpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng\pngmem.c">
+      <Filter>Source Files\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng\pngpread.c">
+      <Filter>Source Files\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng\pngread.c">
+      <Filter>Source Files\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng\pngrio.c">
+      <Filter>Source Files\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng\pngrtran.c">
+      <Filter>Source Files\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng\pngrutil.c">
+      <Filter>Source Files\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng\pngset.c">
+      <Filter>Source Files\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng\pngtrans.c">
+      <Filter>Source Files\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng\pngwio.c">
+      <Filter>Source Files\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng\pngwrite.c">
+      <Filter>Source Files\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng\pngwtran.c">
+      <Filter>Source Files\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng\pngwutil.c">
+      <Filter>Source Files\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng\png.c">
+      <Filter>Source Files\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng\pngerror.c">
+      <Filter>Source Files\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng\pngget.c">
+      <Filter>Source Files\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\gzread.c">
+      <Filter>Source Files\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\gzwrite.c">
+      <Filter>Source Files\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\infback.c">
+      <Filter>Source Files\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\inffast.c">
+      <Filter>Source Files\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\inflate.c">
+      <Filter>Source Files\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\inftrees.c">
+      <Filter>Source Files\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\trees.c">
+      <Filter>Source Files\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\uncompr.c">
+      <Filter>Source Files\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\zutil.c">
+      <Filter>Source Files\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\adler32.c">
+      <Filter>Source Files\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\compress.c">
+      <Filter>Source Files\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\crc32.c">
+      <Filter>Source Files\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\deflate.c">
+      <Filter>Source Files\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\gzclose.c">
+      <Filter>Source Files\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\gzlib.c">
+      <Filter>Source Files\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\utils\rescaler.c">
+      <Filter>Source Files\libwebp\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\utils\thread.c">
+      <Filter>Source Files\libwebp\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\utils\utils.c">
+      <Filter>Source Files\libwebp\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\utils\alpha_processing.c">
+      <Filter>Source Files\libwebp\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\utils\bit_reader.c">
+      <Filter>Source Files\libwebp\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\utils\bit_writer.c">
+      <Filter>Source Files\libwebp\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\utils\color_cache.c">
+      <Filter>Source Files\libwebp\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\utils\filters.c">
+      <Filter>Source Files\libwebp\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\utils\huffman.c">
+      <Filter>Source Files\libwebp\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\utils\huffman_encode.c">
+      <Filter>Source Files\libwebp\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\utils\quant_levels.c">
+      <Filter>Source Files\libwebp\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\utils\quant_levels_dec.c">
+      <Filter>Source Files\libwebp\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\utils\random_webp.c">
+      <Filter>Source Files\libwebp\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\mux\muxread.c">
+      <Filter>Source Files\libwebp\mux</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\mux\muxedit.c">
+      <Filter>Source Files\libwebp\mux</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\mux\muxinternal.c">
+      <Filter>Source Files\libwebp\mux</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dsp\enc_neon.c">
+      <Filter>Source Files\libwebp\dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dsp\enc_sse2.c">
+      <Filter>Source Files\libwebp\dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dsp\lossless.c">
+      <Filter>Source Files\libwebp\dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dsp\upsampling.c">
+      <Filter>Source Files\libwebp\dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dsp\upsampling_sse2.c">
+      <Filter>Source Files\libwebp\dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dsp\yuv.c">
+      <Filter>Source Files\libwebp\dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dsp\cpu.c">
+      <Filter>Source Files\libwebp\dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dsp\dec.c">
+      <Filter>Source Files\libwebp\dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dsp\dec_neon.c">
+      <Filter>Source Files\libwebp\dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dsp\dec_sse2.c">
+      <Filter>Source Files\libwebp\dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dsp\enc.c">
+      <Filter>Source Files\libwebp\dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\demux\demux.c">
+      <Filter>Source Files\libwebp\demux</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\enc\cost.c">
+      <Filter>Source Files\libwebp\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\enc\filter.c">
+      <Filter>Source Files\libwebp\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\enc\histogram.c">
+      <Filter>Source Files\libwebp\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\enc\backward_references.c">
+      <Filter>Source Files\libwebp\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\enc\config.c">
+      <Filter>Source Files\libwebp\enc</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dec\webp.c">
+      <Filter>Source Files\libwebp\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dec\alpha.c">
+      <Filter>Source Files\libwebp\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dec\buffer.c">
+      <Filter>Source Files\libwebp\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dec\frame.c">
+      <Filter>Source Files\libwebp\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dec\idec.c">
+      <Filter>Source Files\libwebp\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dec\io.c">
+      <Filter>Source Files\libwebp\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dec\layer.c">
+      <Filter>Source Files\libwebp\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dec\quant.c">
+      <Filter>Source Files\libwebp\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dec\tree.c">
+      <Filter>Source Files\libwebp\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dec\vp8.c">
+      <Filter>Source Files\libwebp\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="libwebp\dec\vp8l.c">
+      <Filter>Source Files\libwebp\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="xp3filter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tvpsnd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ncbind.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="tjs2\tjsNative.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsObject.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsObjectExtendable.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsOctPack.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjspp.tab.hpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsRandomGenerator.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsRegExp.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsScriptBlock.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsScriptCache.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsString.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsTypes.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsUtils.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsVariant.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsVariantString.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjs.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjs.tab.hpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsArray.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsBinarySerializer.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsByteCodeLoader.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsCommHead.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsCompileControl.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsConfig.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsConstArrayData.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsDate.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsdate.tab.hpp">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsDateParser.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsDebug.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsDictionary.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsError.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsErrorDefs.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsErrorInc.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsException.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsGlobalStringMap.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsHashSearch.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsInterCodeExec.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsInterCodeGen.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsInterface.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsLex.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsMath.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsMessage.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsMT19937ar-cok.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="tjs2\tjsNamespace.h">
+      <Filter>Source Files\tjs2</Filter>
+    </ClInclude>
+    <ClInclude Include="onig\config.h">
+      <Filter>Source Files\onig</Filter>
+    </ClInclude>
+    <ClInclude Include="onig\oniggnu.h">
+      <Filter>Source Files\onig</Filter>
+    </ClInclude>
+    <ClInclude Include="onig\onigposix.h">
+      <Filter>Source Files\onig</Filter>
+    </ClInclude>
+    <ClInclude Include="onig\oniguruma.h">
+      <Filter>Source Files\onig</Filter>
+    </ClInclude>
+    <ClInclude Include="onig\regenc.h">
+      <Filter>Source Files\onig</Filter>
+    </ClInclude>
+    <ClInclude Include="onig\regint.h">
+      <Filter>Source Files\onig</Filter>
+    </ClInclude>
+    <ClInclude Include="onig\regparse.h">
+      <Filter>Source Files\onig</Filter>
+    </ClInclude>
+    <ClInclude Include="onig\st.h">
+      <Filter>Source Files\onig</Filter>
+    </ClInclude>
+    <ClInclude Include="libdisasm\ia32_implicit.h">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="libdisasm\ia32_insn.h">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="libdisasm\ia32_invariant.h">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="libdisasm\ia32_modrm.h">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="libdisasm\ia32_opcode_tables.h">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="libdisasm\ia32_operand.h">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="libdisasm\ia32_reg.h">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="libdisasm\ia32_settings.h">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="libdisasm\libdis.h">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="libdisasm\qword.h">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="libdisasm\x86_imm.h">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="libdisasm\x86_operand_list.h">
+      <Filter>Source Files\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsLoaderIntf.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hook_init.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadTLG.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libwebp\mux\muxi.h">
+      <Filter>Source Files\libwebp\mux</Filter>
+    </ClInclude>
+    <ClInclude Include="xp3filter.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tp_stub.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tvpsnd.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ncb_invoke.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ncbind.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ncb_foreach.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
