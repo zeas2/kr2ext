@@ -1,5 +1,6 @@
 #include "hook_init.h"
 #include "GraphicsLoaderIntf.h"
+#include "StorageIntf.h"
 
 //---------------------------------------------------------------------------
 // tTJSBinaryStream
@@ -113,6 +114,7 @@ BYTE* KMPSearch(BYTE* BaseStr, DWORD BaseStrLen, BYTE* SubStr, DWORD SubStrLen)
 }
 tTJSHashTable<ttstr, tTVPGraphicHandlerType> *TVPGraphicType_Hash = nullptr;
 extern void InstallGraphicType(tTJSHashTable<ttstr, tTVPGraphicHandlerType> *TVPGraphicType_Hash);
+void InstallStorageMedia(MediaStorageHashTable* pTable);
 
 static PIMAGE_NT_HEADERS32 PEHdr;
 static LPBYTE pCodeBase;
@@ -183,6 +185,53 @@ bool Hooker::init_hook()
 	}
 
 	InstallGraphicType(TVPGraphicType_Hash);
+
+	// TVPRegisterStorageMedia
+	if (!TVPImportFuncPtrc2e423356d9ca3f26f9c1d294ee9b742)
+	{
+		static char funcname[] = "void ::TVPRegisterStorageMedia(iTVPStorageMedia *)";
+		TVPImportFuncPtrc2e423356d9ca3f26f9c1d294ee9b742 = TVPGetImportFuncPtr(funcname);
+	}
+	p = (BYTE *)TVPImportFuncPtrc2e423356d9ca3f26f9c1d294ee9b742;
+
+	MediaStorageHashTable *pMediaTable = nullptr;
+	count = 0; bytes = 0;
+	while (bytes < 32) {
+		if (pMediaTable) break;
+		size = x86_disasm(p, 1024, 0, bytes, &insn);
+		if (size) {
+			count++; bytes += size;
+			if (insn.size < 5) continue;
+			if (insn.type == insn_call) { // call TVPRegisterStorageMedia
+				for (x86_oplist_t *op = insn.operands; op; op = op->next) {
+					if (op_relative_far == op->op.type) {
+						p = p + bytes + op->op.data.relative_far;
+						bytes = 0;
+						count = 0;
+						break; // to next phase
+					}
+				}
+			} else if (insn.group == insn_move) { // TVPStorageMediaManager.Register(media);
+				for (x86_oplist_t *op = insn.operands; op; op = op->next) {
+					if (op->op.access != op_read) continue;
+					if (op->op.datatype != op_dword) continue;
+					pMediaTable = (MediaStorageHashTable *)(op->op.data.dword);
+					if (pMediaTable->GetCount() != 1) {
+						pMediaTable = (MediaStorageHashTable *)(op->op.data.dword + 4); // skip vft
+					}
+					break;
+				}
+			}
+		} else {
+			/* error */
+			bytes++;        /* try next byte */
+		}
+	}
+
+	if (!pMediaTable) {
+		return hook_fail();
+	}
+	InstallStorageMedia(pMediaTable);
 
 	return true;
 }

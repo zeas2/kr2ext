@@ -61,12 +61,12 @@ extern "C" HRESULT _stdcall V2Link(iTVPFunctionExporter *exporter)
 
  	Hooker hooker;
  	hooker.init_hook();
-	RegistGraphicLoader();
+	//RegistGraphicLoader();
 
 	ttstr patch = TVPGetAppPath() + "patch.tjs";
 	if (TVPIsExistentStorageNoSearch(patch))
 		TVPExecuteStorage(patch);
-
+	
 	//RegistXP3Filter();
 
 	return S_OK;

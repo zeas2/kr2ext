@@ -133,7 +133,11 @@ extern void TVPLoadERI(void* formatdata, void *callbackdata, tTVPGraphicSizeCall
 
 void TVPLoadWEBP(void* formatdata, void *callbackdata, tTVPGraphicSizeCallback sizecallback,
 	tTVPGraphicScanLineCallback scanlinecallback, tTVPMetaInfoPushCallback metainfopushcallback,
-	tTJSBinaryStream *src, tjs_int keyidx,  tTVPGraphicLoadMode mode);
+	tTJSBinaryStream *src, tjs_int keyidx, tTVPGraphicLoadMode mode);
+
+void TVPLoadBPG(void* formatdata, void *callbackdata, tTVPGraphicSizeCallback sizecallback,
+	tTVPGraphicScanLineCallback scanlinecallback, tTVPMetaInfoPushCallback metainfopushcallback,
+	tTJSBinaryStream *src, tjs_int keyidx, tTVPGraphicLoadMode mode);
 //---------------------------------------------------------------------------
 
 

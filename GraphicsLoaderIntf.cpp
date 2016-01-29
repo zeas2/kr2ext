@@ -15,6 +15,7 @@
 #include "LoadTLG.h"
 #include <assert.h>
 #include "ncbind.hpp"
+#include <memory>
 
 //---------------------------------------------------------------------------
 
@@ -126,6 +127,11 @@ static void __fastcall TVPLoadGraphicRoute(
 // 			CALL_HANDLER_AND_RET(TLGHandler);
 // 		}
 		//CALL_LOAD_FUNC_AND_RET(TVPLoadTLG);
+	} else if (
+		magic[0] == 'B' &&
+		magic[1] == 'P' &&
+		magic[2] == 'G'){
+		CALL_LOAD_FUNC_AND_RET(TVPLoadBPG);
     } else if(
         magic[0] == 0xFF &&
         magic[1] == 0xD8 &&
@@ -1349,6 +1355,79 @@ void TVPLoadPNG(void* formatdata, void *callbackdata, tTVPGraphicSizeCallback si
 	if (image) delete[] image;
 }
 //---------------------------------------------------------------------------
+#pragma pack(push, 1)
+struct tTVPLayerBitmapMemoryRecord
+{
+	void * alloc_ptr; // allocated pointer
+	tjs_uint size; // original bmp bits size, in bytes
+	tjs_uint32 sentinel_backup1; // sentinel value 1
+	tjs_uint32 sentinel_backup2; // sentinel value 2
+};
+#pragma pack(pop)
+typedef uint32_t tTJSPointerSizedInteger;
+#define TVPCannotAllocateBitmapBits \
+	TJS_W("¥Ó¥Ã¥È¥Þ¥Ã¥×ÓÃ¥á¥â¥ê¤ò´_±£¤Ç¤­¤Þ¤»¤ó/%1(size=%2)")
+//---------------------------------------------------------------------------
+static void * TVPAllocBitmapBits(tjs_uint size, tjs_uint width, tjs_uint height)
+{
+	if (size == 0) return NULL;
+
+	tjs_uint8 * ptrorg, *ptr;
+	tjs_uint allocbytes = 16 + size + sizeof(tTVPLayerBitmapMemoryRecord)+sizeof(tjs_uint32)* 2;
+	ptr = ptrorg = (tjs_uint8*)malloc(allocbytes);
+	if (!ptr) TVPThrowExceptionMessage(TVPCannotAllocateBitmapBits,
+		TJS_W("at TVPAllocBitmapBits"), ttstr((tjs_int)allocbytes) + TJS_W("(") +
+		ttstr((int)width) + TJS_W("x") + ttstr((int)height) + TJS_W(")"));
+	// align to a paragraph ( 16-bytes )
+	ptr += 16 + sizeof(tTVPLayerBitmapMemoryRecord);
+	*reinterpret_cast<tTJSPointerSizedInteger*>(&ptr) >>= 4;
+	*reinterpret_cast<tTJSPointerSizedInteger*>(&ptr) <<= 4;
+
+	tTVPLayerBitmapMemoryRecord * record =
+		(tTVPLayerBitmapMemoryRecord*)
+		(ptr - sizeof(tTVPLayerBitmapMemoryRecord)-sizeof(tjs_uint32));
+
+	// fill memory allocation record
+	record->alloc_ptr = (void *)ptrorg;
+	record->size = size;
+	record->sentinel_backup1 = rand() + (rand() << 16);
+	record->sentinel_backup2 = rand() + (rand() << 16);
+
+	// set sentinel
+	*(tjs_uint32*)(ptr - sizeof(tjs_uint32)) = ~record->sentinel_backup1;
+	*(tjs_uint32*)(ptr + size) = ~record->sentinel_backup2;
+	// Stored sentinels are nagated, to avoid that the sentinel backups in
+	// tTVPLayerBitmapMemoryRecord becomes the same value as the sentinels.
+	// This trick will make the detection of the memory corruption easier.
+	// Because on some occasions, running memory writing will write the same
+	// values at first sentinel and the tTVPLayerBitmapMemoryRecord.
+
+	// return buffer pointer
+	return ptr;
+}
+//---------------------------------------------------------------------------
+static void TVPFreeBitmapBits(void *ptr)
+{
+	if (ptr)
+	{
+		// get memory allocation record pointer
+		tjs_uint8 *bptr = (tjs_uint8*)ptr;
+		tTVPLayerBitmapMemoryRecord * record =
+			(tTVPLayerBitmapMemoryRecord*)
+			(bptr - sizeof(tTVPLayerBitmapMemoryRecord)-sizeof(tjs_uint32));
+
+		// check sentinel
+		if (~(*(tjs_uint32*)(bptr - sizeof(tjs_uint32))) != record->sentinel_backup1)
+			TVPThrowExceptionMessage(
+			TJS_W("Layer bitmap: Buffer underrun detected. Check your drawing code!"));
+		if (~(*(tjs_uint32*)(bptr + record->size)) != record->sentinel_backup2)
+			TVPThrowExceptionMessage(
+			TJS_W("Layer bitmap: Buffer overrun detected. Check your drawing code!"));
+
+		free(record->alloc_ptr);
+	}
+}
+//---------------------------------------------------------------------------
 
 struct tTVPBitmap
 {
@@ -1362,9 +1441,191 @@ struct tTVPBitmap
 	tjs_int PitchStep; // step bytes to next(below) line
 	tjs_int Width; // actual width
 	tjs_int Height; // actual height
+
+public:
+	tTVPBitmap(tjs_uint width, tjs_uint height, tjs_uint bpp);
+
+	tTVPBitmap(const tTVPBitmap & r);
+
+	~tTVPBitmap();
+
+	void Allocate(tjs_uint width, tjs_uint height, tjs_uint bpp);
+
+	void AddRef(void)
+	{
+		RefCount++;
+	}
+
+	void Release(void)
+	{
+		if (RefCount == 1)
+			delete this;
+		else
+			RefCount--;
+	}
+
+	tjs_uint GetWidth() const { return Width; }
+	tjs_uint GetHeight() const { return Height; }
+
+	tjs_uint GetBPP() const;
+	bool Is32bit() const;
+	bool Is8bit() const;
+
+
+	void * GetScanLine(tjs_uint l) const;
+
+	tjs_int GetPitch() const { return PitchStep; }
+
+	bool IsIndependent() const { return RefCount == 1; }
+
+	const void * GetBits() const { return Bits; }
 };
 
 
+//---------------------------------------------------------------------------
+// tTVPBitmap : internal bitmap object
+//---------------------------------------------------------------------------
+/*
+important:
+Note that each lines must be started at tjs_uint32 ( 4bytes ) aligned address.
+This is the default Windows bitmap allocate behavior.
+*/
+tTVPBitmap::tTVPBitmap(tjs_uint width, tjs_uint height, tjs_uint bpp)
+{
+	// tTVPBitmap constructor
+
+	//TVPInitWindowOptions(); // ensure window/bitmap usage options are initialized
+
+	RefCount = 1;
+
+	Allocate(width, height, bpp); // allocate initial bitmap
+}
+//---------------------------------------------------------------------------
+tTVPBitmap::~tTVPBitmap()
+{
+	TVPFreeBitmapBits(Bits);
+	free(BitmapInfo);
+}
+//---------------------------------------------------------------------------
+tTVPBitmap::tTVPBitmap(const tTVPBitmap & r)
+{
+	// constructor for cloning bitmap
+	//TVPInitWindowOptions(); // ensure window/bitmap usage options are initialized
+
+	RefCount = 1;
+
+	// allocate bitmap which has the same metrics to r
+	Allocate(r.GetWidth(), r.GetHeight(), r.GetBPP());
+
+	// copy BitmapInfo
+	memcpy(BitmapInfo, r.BitmapInfo, BitmapInfoSize);
+
+	// copy Bits
+	if (r.Bits) memcpy(Bits, r.Bits, r.BitmapInfo->bmiHeader.biSizeImage);
+
+	// copy pitch
+	PitchBytes = r.PitchBytes;
+	PitchStep = r.PitchStep;
+}
+//---------------------------------------------------------------------------
+struct _BITMAPINFO : public BITMAPINFO {
+
+};
+void tTVPBitmap::Allocate(tjs_uint width, tjs_uint height, tjs_uint bpp)
+{
+	// allocate bitmap bits
+	// bpp must be 8 or 32
+
+	// create BITMAPINFO
+	BitmapInfoSize = sizeof(BITMAPINFOHEADER)+
+		((bpp == 8) ? sizeof(RGBQUAD)* 256 : 0);
+	BitmapInfo = (_BITMAPINFO*)calloc(1, BitmapInfoSize);
+	//GlobalAlloc(GPTR, BitmapInfoSize);
+	if (!BitmapInfo) TVPThrowExceptionMessage(TVPCannotAllocateBitmapBits,
+		TJS_W("allocating BITMAPINFOHEADER"), ttstr((tjs_int)BitmapInfoSize));
+
+	Width = width;
+	Height = height;
+
+	tjs_uint bitmap_width = width;
+	// note that the allocated bitmap size can be bigger than the
+	// original size because the horizontal pitch of the bitmap
+	// is aligned to a paragraph (16bytes)
+
+	if (bpp == 8)
+	{
+		bitmap_width = (((bitmap_width - 1) / 16) + 1) * 16; // align to a paragraph
+		PitchBytes = (((bitmap_width - 1) >> 2) + 1) << 2;
+	} else
+	{
+		bitmap_width = (((bitmap_width - 1) / 4) + 1) * 4; // align to a paragraph
+		PitchBytes = bitmap_width * 4;
+	}
+
+	PitchStep = /*-*/PitchBytes;
+
+
+	BitmapInfo->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+	BitmapInfo->bmiHeader.biWidth = bitmap_width;
+	BitmapInfo->bmiHeader.biHeight = height;
+	BitmapInfo->bmiHeader.biPlanes = 1;
+	BitmapInfo->bmiHeader.biBitCount = bpp;
+	BitmapInfo->bmiHeader.biCompression = 0/*BI_RGB*/;
+	BitmapInfo->bmiHeader.biSizeImage = PitchBytes * height;
+	BitmapInfo->bmiHeader.biXPelsPerMeter = 0;
+	BitmapInfo->bmiHeader.biYPelsPerMeter = 0;
+	BitmapInfo->bmiHeader.biClrUsed = 0;
+	BitmapInfo->bmiHeader.biClrImportant = 0;
+
+	// create grayscale palette
+	if (bpp == 8)
+	{
+		RGBQUAD *pal = (RGBQUAD*)((tjs_uint8*)BitmapInfo + sizeof(BITMAPINFOHEADER));
+
+		for (tjs_int i = 0; i < 256; i++)
+		{
+			pal[i].rgbBlue = pal[i].rgbGreen = pal[i].rgbRed = (BYTE)i;
+			pal[i].rgbReserved = 0;
+		}
+	}
+
+	// allocate bitmap bits
+	try
+	{
+		Bits = TVPAllocBitmapBits(BitmapInfo->bmiHeader.biSizeImage,
+			width, height);
+	} catch (...)
+	{
+		free(BitmapInfo), BitmapInfo = NULL;
+		throw;
+	}
+}
+
+#define TVPScanLineRangeOver \
+	TJS_W("¥¹¥­¥ã¥ó¥é¥¤¥ó %1 ¤Ï¹ ‡ì(0¡«%2)¤ò³¬¤¨¤Æ¤¤¤Þ¤¹")
+//---------------------------------------------------------------------------
+void * tTVPBitmap::GetScanLine(tjs_uint l) const
+{
+	if ((tjs_int)l >= BitmapInfo->bmiHeader.biHeight)
+	{
+		TVPThrowExceptionMessage(TVPScanLineRangeOver, ttstr((tjs_int)l),
+			ttstr((tjs_int)BitmapInfo->bmiHeader.biHeight - 1));
+	}
+
+	return /*(BitmapInfo->bmiHeader.biHeight - l -1 )*/l * PitchBytes + (tjs_uint8*)Bits;
+}
+
+tjs_uint tTVPBitmap::GetBPP() const {
+	return BitmapInfo->bmiHeader.biBitCount;
+}
+
+bool tTVPBitmap::Is32bit() const {
+	return BitmapInfo->bmiHeader.biBitCount == 32;
+}
+
+bool tTVPBitmap::Is8bit() const {
+	return BitmapInfo->bmiHeader.biBitCount == 8;
+}
 
 //---------------------------------------------------------------------------
 // TVPLoadGraphic related
@@ -1493,6 +1754,51 @@ void TVPLoadWEBP( void* formatdata, void *callbackdata,
 	delete []data;
 }
 
+extern "C" {
+#include "libbpg/libbpg.h"
+}
+void TVPLoadBPG(void* formatdata, void *callbackdata,
+	tTVPGraphicSizeCallback sizecallback, tTVPGraphicScanLineCallback scanlinecallback,
+	tTVPMetaInfoPushCallback metainfopushcallback, tTJSBinaryStream *src, tjs_int keyidx,
+	tTVPGraphicLoadMode mode)
+{
+	struct CBPGDecoderContext {
+		BPGDecoderContext *ctx;
+		CBPGDecoderContext() {
+			//TVPInitLibAVCodec();
+			ctx = bpg_decoder_open();
+		}
+		~CBPGDecoderContext() {
+			bpg_decoder_close(ctx);
+		}
+		BPGDecoderContext *get() { return ctx; }
+	} img;
+	int datasize = src->GetSize();
+	std::unique_ptr<uint8_t[]> data(new uint8_t[datasize]);
+	src->ReadBuffer(data.get(), datasize);
+
+	if (bpg_decoder_decode(img.get(), data.get(), datasize) < 0) {
+		TVPThrowExceptionMessage(TJS_W("Invalid BPG image"));
+	}
+
+	BPGImageInfo img_info;
+
+	bpg_decoder_get_info(img.get(), &img_info);
+
+	sizecallback(callbackdata, img_info.width, img_info.height);
+	bpg_decoder_start(img.get(), BPG_OUTPUT_FORMAT_RGBA32);
+	if (glmNormal == mode) {
+		for (uint32_t y = 0; y < img_info.height; y++) {
+			bpg_decoder_get_line(img.get(), (uint8_t*)scanlinecallback(callbackdata, y));
+		}
+	} else if (glmGrayscale == mode) {
+		for (uint32_t y = 0; y < img_info.height; y++) {
+			bpg_decoder_get_gray_line(img.get(), (uint8_t*)scanlinecallback(callbackdata, y));
+		}
+	}
+	scanlinecallback(callbackdata, -1); // image was written
+}
+
 struct tTVPGraphicsSearchData
 {
 	ttstr Name;
@@ -1522,6 +1828,8 @@ public:
 		return v;
 	}
 };
+
+bool TVPAllocGraphicCacheOnHeap = false;
 class tTVPGraphicImageData
 {
 private:
@@ -1582,15 +1890,13 @@ public:
 			}
 		}
 	}
-
+#if 0
 	void AssignToBitmap(iTJSDispatch2 *bmp) const
 	{
-		if (!TVPAllocGraphicCacheOnHeap)
-		{
+		if (!TVPAllocGraphicCacheOnHeap) {
 			// simply assign to Bitmap
 			if (Bitmap) bmp->AssignBitmap(Bitmap);
-		} else
-		{
+		} else {
 			// copy from the rawdata heap
 			if (RawData)
 			{
@@ -1606,7 +1912,7 @@ public:
 			}
 		}
 	}
-
+#endif
 	tjs_uint GetSize() const { return Size; }
 
 	void AddRef() { RefCount++; }
@@ -1669,7 +1975,7 @@ static void TVPCheckGraphicCacheLimit()
 		}
 	}
 }
-
+#if 0
 class LayerExGraphicLoader {
 	enum { clBlack = 0x000000, clWhite = 0xFFFFFF, clWindow = 0x8000005, clWindowText = 0x8000008, clNone = 0x1fffffff };
 
@@ -1710,6 +2016,7 @@ class LayerExGraphicLoader {
 		ttstr pn;
 		std::vector<tTVPGraphicMetaInfoPair> * mi = NULL;
 		int ret = 0;
+#if 0
 		try
 		{
 			tTVPBitmap *bmp = TVPInternalLoadGraphic(nname, keyidx, desw, desh, &mi, mode, &pn);
@@ -1761,7 +2068,7 @@ class LayerExGraphicLoader {
 
 		if (mi) delete mi;
 		if (data) data->Release();
-
+#endif
 		return ret;
 	}
 
@@ -1855,3 +2162,4 @@ public:
 NCB_ATTACH_CLASS(LayerExGraphicLoader, Layer) {
 	NCB_METHOD_RAW_CALLBACK(loadImages, LayerExGraphicLoader::loadImages, 0);
 }
+#endif

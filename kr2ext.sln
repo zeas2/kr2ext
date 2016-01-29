@@ -1,7 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C++ Express 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kr2ext", "kr2ext.vcxproj", "{3F83CFC0-E90A-49E2-AF65-3013EA780FB0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libbpg", "libbpg\libbpg.vcxproj", "{8CE540DD-4286-4746-9C81-19C3F0317D10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +17,10 @@ Global
 		{3F83CFC0-E90A-49E2-AF65-3013EA780FB0}.Debug|Win32.Build.0 = Debug|Win32
 		{3F83CFC0-E90A-49E2-AF65-3013EA780FB0}.Release|Win32.ActiveCfg = Release|Win32
 		{3F83CFC0-E90A-49E2-AF65-3013EA780FB0}.Release|Win32.Build.0 = Release|Win32
+		{8CE540DD-4286-4746-9C81-19C3F0317D10}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8CE540DD-4286-4746-9C81-19C3F0317D10}.Debug|Win32.Build.0 = Debug|Win32
+		{8CE540DD-4286-4746-9C81-19C3F0317D10}.Release|Win32.ActiveCfg = Release|Win32
+		{8CE540DD-4286-4746-9C81-19C3F0317D10}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

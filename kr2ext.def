@@ -1,0 +1,11 @@
+EXPORTS
+;susie plugIn
+	GetPluginInfo
+	IsSupported
+	GetArchiveInfo
+	GetFileInfo
+	GetFile
+;
+;	GetPictureInfo
+;	GetPicture
+;	GetPreview

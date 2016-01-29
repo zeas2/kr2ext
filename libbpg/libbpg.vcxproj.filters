@@ -1,0 +1,420 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\libavcodec">
+      <UniqueIdentifier>{19349748-5d7a-478e-bcab-9a83b91fed77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\libavutil">
+      <UniqueIdentifier>{f9943927-8039-4004-80d9-0eb8d7efc145}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="config.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libbpg.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\golomb.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\hevc.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\hevcdsp.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\hevcpred.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\internal.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\mathops.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\old_codec_ids.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\put_bits.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\rnd_avg.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\thread.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\version.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\videodsp.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\avcodec.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\bswapdsp.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\bytestream.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\cabac.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\cabac_functions.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\cabac_tablegen.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavcodec\get_bits.h">
+      <Filter>源文件\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\parseutils.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\pca.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\pixdesc.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\pixelutils.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\pixfmt.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\qsort.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\random_seed.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\rational.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\rc4.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\replaygain.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\ripemd.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\samplefmt.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\sha.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\sha512.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\softfloat.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\stereo3d.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\threadmessage.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\time.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\time_internal.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\timecode.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\timer.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\timestamp.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\tree.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\version.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\x86_cpu.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\xga_font_data.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\xtea.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\adler32.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\aes.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\atomic.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\atomic_gcc.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\atomic_suncc.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\atomic_win32.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\attributes.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\audio_fifo.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\audioconvert.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\avassert.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\avconfig.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\avstring.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\avutil.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\base64.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\blowfish.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\bprint.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\bswap.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\buffer.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\buffer_internal.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\cast5.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\channel_layout.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\colorspace.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\common.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\cpu.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\cpu_internal.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\crc.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\des.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\dict.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\display.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\downmix_info.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\dynarray.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\error.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\eval.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\ffversion.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\fifo.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\file.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\fixed_dsp.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\float_dsp.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\frame.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\hash.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\hmac.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\imgutils.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\integer.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\internal.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\intfloat.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\intmath.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\intreadwrite.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\lfg.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\libm.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\lls.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\log.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\lzo.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\macros.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\mathematics.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\md5.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\mem.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\motion_vector.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\murmur3.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\old_pix_fmts.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\opencl.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\opencl_internal.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="libavutil\opt.h">
+      <Filter>源文件\libavutil</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="libbpg.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libavcodec\cabac.c">
+      <Filter>源文件\libavcodec</Filter>
+    </ClCompile>
+    <ClCompile Include="libavcodec\golomb.c">
+      <Filter>源文件\libavcodec</Filter>
+    </ClCompile>
+    <ClCompile Include="libavcodec\hevc.c">
+      <Filter>源文件\libavcodec</Filter>
+    </ClCompile>
+    <ClCompile Include="libavcodec\hevc_cabac.c">
+      <Filter>源文件\libavcodec</Filter>
+    </ClCompile>
+    <ClCompile Include="libavcodec\hevc_filter.c">
+      <Filter>源文件\libavcodec</Filter>
+    </ClCompile>
+    <ClCompile Include="libavcodec\hevc_mvs.c">
+      <Filter>源文件\libavcodec</Filter>
+    </ClCompile>
+    <ClCompile Include="libavcodec\hevc_ps.c">
+      <Filter>源文件\libavcodec</Filter>
+    </ClCompile>
+    <ClCompile Include="libavcodec\hevc_refs.c">
+      <Filter>源文件\libavcodec</Filter>
+    </ClCompile>
+    <ClCompile Include="libavcodec\hevc_sei.c">
+      <Filter>源文件\libavcodec</Filter>
+    </ClCompile>
+    <ClCompile Include="libavcodec\hevcdsp.c">
+      <Filter>源文件\libavcodec</Filter>
+    </ClCompile>
+    <ClCompile Include="libavcodec\hevcpred.c">
+      <Filter>源文件\libavcodec</Filter>
+    </ClCompile>
+    <ClCompile Include="libavcodec\utils.c">
+      <Filter>源文件\libavcodec</Filter>
+    </ClCompile>
+    <ClCompile Include="libavcodec\videodsp.c">
+      <Filter>源文件\libavcodec</Filter>
+    </ClCompile>
+    <ClCompile Include="libavutil\buffer.c">
+      <Filter>源文件\libavutil</Filter>
+    </ClCompile>
+    <ClCompile Include="libavutil\frame.c">
+      <Filter>源文件\libavutil</Filter>
+    </ClCompile>
+    <ClCompile Include="libavutil\log2_tab.c">
+      <Filter>源文件\libavutil</Filter>
+    </ClCompile>
+    <ClCompile Include="libavutil\md5.c">
+      <Filter>源文件\libavutil</Filter>
+    </ClCompile>
+    <ClCompile Include="libavutil\mem.c">
+      <Filter>源文件\libavutil</Filter>
+    </ClCompile>
+    <ClCompile Include="libavutil\pixdesc.c">
+      <Filter>源文件\libavutil</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
