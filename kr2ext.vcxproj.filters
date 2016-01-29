@@ -795,14 +795,14 @@
     <ClCompile Include="libwebp\dec\frame.c">
       <Filter>Source Files\libwebp\dec</Filter>
     </ClCompile>
-    <ClCompile Include="tar_zip.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="minizip\unzip.c">
       <Filter>Source Files\minizip</Filter>
     </ClCompile>
     <ClCompile Include="minizip\ioapi.cpp">
       <Filter>Source Files\minizip</Filter>
+    </ClCompile>
+    <ClCompile Include="archive.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

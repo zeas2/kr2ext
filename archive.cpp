@@ -54,7 +54,7 @@ typedef struct
 class tArchive {
 public:
 	std::deque<fileInfo> FileList;
-	std::map<std::string, fileInfo*> FileIdxByName;
+	std::unordered_map<std::string, fileInfo*> FileIdxByName;
 	std::string ArchiveName;
 	tArchive(const std::string &name) : ArchiveName(name) { }
 	virtual fileInfo* GetFileInfo(unsigned long off_or_idx) = 0;
@@ -380,6 +380,10 @@ public:
 			std::vector<wchar_t> wbuf;
 			wbuf.resize(len + 1);
 			SzArEx_GetFileNameUtf16(&db, i, (UInt16*)&wbuf.front());
+			for (wchar_t &c : wbuf) {
+				if (c >= ('A') && c <= ('Z'))
+					c += ('a') - ('A');
+			}
 			info.filename[sizeof(info.filename) - 1] = 0;
 			if (WideCharToMultiByte(CP_ACP, 0, &wbuf[0], wbuf.size(), info.filename, 200, nullptr, nullptr) == 0)
 				return false;
@@ -469,14 +473,16 @@ static tArchive* GetArchive(const std::string &buf) {
 		} else {
 			delete p;
 		}
-	} else if (header[0] == '7' && header[1] == 'z') {
+	}
+	if (!pArc && header[0] == '7' && header[1] == 'z') {
 		SevenZipArchive *p = new SevenZipArchive(buf);
 		if (p->Open()) {
 			pArc = p;
 		} else {
 			delete pArc;
 		}
-	} else {
+	}
+	if (!pArc) {
 		TarArchive *pTar = new TarArchive(buf);
 		if (pTar->init()) {
 			pArc = pTar;
