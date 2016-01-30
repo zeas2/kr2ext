@@ -163,13 +163,18 @@ bool Hooker::init_hook()
 			for (x86_oplist_t *op = insn.operands; op; op = op->next) {
 				if (op->op.access != op_read) continue;
 				if (op->op.datatype != op_dword) continue;
-				if (op->op.type != op_offset) continue;
-				BYTE *p = (BYTE *)op->op.data.dword;
+				BYTE *p = nullptr;
+				switch (op->op.type) {
+				case op_dword:
+				case op_offset: p = (BYTE *)op->op.data.dword; break;
+				case op_expression: p = (BYTE *)op->op.data.expression.disp; break;
+				default: break;
+				}
 				if (p >= pDataEnd || p <= pDataBase) continue;
-				unsigned long *pNFirst = (unsigned long *)op->op.data.dword;
+				unsigned long *pNFirst = (unsigned long *)p;
 				if (pNFirst[-1] != 10) continue;
 				// hit TVPGraphicType !
-				TVPGraphicType_Hash = (tTJSHashTable<ttstr, tTVPGraphicHandlerType> *)(op->op.data.dword - 0xA04);
+				TVPGraphicType_Hash = (tTJSHashTable<ttstr, tTVPGraphicHandlerType> *)(p - 0xA04);
 				break;
 			}
 		} else {
@@ -185,7 +190,7 @@ bool Hooker::init_hook()
 	}
 
 	InstallGraphicType(TVPGraphicType_Hash);
-
+#if 0
 	// TVPRegisterStorageMedia
 	if (!TVPImportFuncPtrc2e423356d9ca3f26f9c1d294ee9b742)
 	{
@@ -232,7 +237,7 @@ bool Hooker::init_hook()
 		return hook_fail();
 	}
 	InstallStorageMedia(pMediaTable);
-
+#endif
 	return true;
 }
 

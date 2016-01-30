@@ -23,18 +23,18 @@ namespace TJS {
 //---------------------------------------------------------------------------
 // Graphic Loading Handler Type
 //---------------------------------------------------------------------------
-typedef void (__fastcall *tTVPGraphicSizeCallback)
+typedef void (*tTVPGraphicSizeCallback)
 	(void *callbackdata, tjs_uint w, tjs_uint h);
-typedef void (__fastcall *tTVPGraphicSizeCallback_r)
+typedef void (__fastcall *tTVPGraphicSizeCallbackVCL)
 	(tjs_uint h, tjs_uint w, void *callbackdata);
 /*
 	callback type to inform the image's size.
 	call this once before TVPGraphicScanLineCallback.
 */
 
-typedef void * (__fastcall *tTVPGraphicScanLineCallback)
+typedef void * (*tTVPGraphicScanLineCallback)
 	(void *callbackdata, tjs_int y);
-typedef void * (__fastcall *tTVPGraphicScanLineCallback_r)
+typedef void * (__fastcall *tTVPGraphicScanLineCallbackVCL)
 	(tjs_int y, void *callbackdata);
 /*
 	callback type to ask the scanline buffer for the decoded image, per a line.
@@ -44,9 +44,9 @@ typedef void * (__fastcall *tTVPGraphicScanLineCallback_r)
 	was given by previous calling of TVPGraphicScanLineCallback. in this time,
 	this callback function must return NULL.
 */
-typedef void(__fastcall *tTVPMetaInfoPushCallback)
+typedef void(*tTVPMetaInfoPushCallback)
 	(void *callbackdata, const ttstr & name, const ttstr & value);
-typedef void(__fastcall *tTVPMetaInfoPushCallback_r)
+typedef void(__fastcall *tTVPMetaInfoPushCallbackVCL)
 	(const ttstr & value, const ttstr & name, void *callbackdata);
 /*
 	callback type to push meta-information of the image.
@@ -60,7 +60,6 @@ enum tTVPGraphicLoadMode
 	glmGrayscale // grayscale 8bit mode
 };
 
-#if 0
 typedef void(*tTVPGraphicLoadingHandler)(void* formatdata,
 	void *callbackdata,
 	tTVPGraphicSizeCallback sizecallback,
@@ -69,18 +68,18 @@ typedef void(*tTVPGraphicLoadingHandler)(void* formatdata,
 	tTJSBinaryStream *src,
 	tjs_int32 keyidx,
 	tTVPGraphicLoadMode mode);
-#else
-typedef void(__fastcall *tTVPGraphicLoadingHandler)(
-	tTVPGraphicSizeCallback_r sizecallback,
+
+typedef void(__fastcall *tTVPGraphicLoadingHandlerVCL)(
+	tTVPGraphicSizeCallbackVCL sizecallback,
 	void *callbackdata,
 	tTVPGraphicLoadMode mode,
 	tjs_int32 keyidx,
 	tTJSBinaryStream *src,
-	tTVPMetaInfoPushCallback_r metainfopushcallback,
-	tTVPGraphicScanLineCallback_r scanlinecallback
+	tTVPMetaInfoPushCallbackVCL metainfopushcallback,
+	tTVPGraphicScanLineCallbackVCL scanlinecallback
 	//,void* formatdata
 	);
-#endif
+
 /*
 	format = format specific data given at TVPRegisterGraphicLoadingHandler
 	dest = destination callback function
@@ -104,9 +103,9 @@ typedef void(__fastcall *tTVPGraphicLoadingHandler)(
 // Graphics Format Management
 //---------------------------------------------------------------------------
 void TVPRegisterGraphicLoadingHandler(const ttstr & name,
-	tTVPGraphicLoadingHandler handler, void* formatdata);
+	tTVPGraphicLoadingHandlerVCL handler, void* formatdata);
 void TVPUnregisterGraphicLoadingHandler(const ttstr & name,
-	tTVPGraphicLoadingHandler handler, void * formatdata);
+	tTVPGraphicLoadingHandlerVCL handler, void * formatdata);
 //---------------------------------------------------------------------------
 
 
@@ -191,11 +190,11 @@ extern void TVPTouchImages(const std::vector<ttstr> & storages, tjs_int limit,
 struct tTVPGraphicHandlerType
 {
 	ttstr Extension;
-	tTVPGraphicLoadingHandler Handler;
+	tTVPGraphicLoadingHandlerVCL Handler;
 	void * FormatData;
 
 	tTVPGraphicHandlerType(const ttstr &ext,
-						   tTVPGraphicLoadingHandler handler, void * data)
+						   tTVPGraphicLoadingHandlerVCL handler, void * data)
 	{
 		Extension = ext, Handler = handler, FormatData = data;
 	}

@@ -10,6 +10,7 @@
 #include "minizip/crypt.h"
 #include <deque>
 #include <unordered_map>
+#include <mutex>
 
 unsigned __int64 parseOctNum(const char *oct, int length)
 {
@@ -52,12 +53,21 @@ typedef struct
 #pragma pack(pop)
 
 class tArchive {
+	std::mutex Lock;
+
 public:
 	std::deque<fileInfo> FileList;
 	std::unordered_map<std::string, fileInfo*> FileIdxByName;
 	std::string ArchiveName;
+
 	tArchive(const std::string &name) : ArchiveName(name) { }
 	virtual fileInfo* GetFileInfo(unsigned long off_or_idx) = 0;
+	bool _GetFileData(fileInfo* info, void *buf) {
+		std::lock_guard<std::mutex> lk(Lock);
+		return GetFileData(info, buf);
+	}
+
+protected:
 	virtual bool GetFileData(fileInfo* info, void *buf) = 0; // get data into buf
 };
 extern zlib_filefunc64_def TVPZlibFileFunc;
@@ -343,8 +353,8 @@ class SevenZipArchive : public tArchive {
 		case SZ_SEEK_SET: whence = SEEK_SET; break;
 		default: break;
 		}
-
-		*pos = _fseeki64(_stream, *pos, whence);
+		_fseeki64(_stream, *pos, whence);
+		*pos = _ftelli64(_stream);
 		return SZ_OK;
 	}
 
@@ -388,7 +398,7 @@ public:
 			if (WideCharToMultiByte(CP_ACP, 0, &wbuf[0], wbuf.size(), info.filename, 200, nullptr, nullptr) == 0)
 				return false;
 			info.path[0] = 0;
-			info.position = i;
+			info.position = FileList.size() - 1;
 			UInt64 fileSize = SzArEx_GetFileSize(&db, i);
 			info.filesize = fileSize;
 			info.compsize = fileSize;
@@ -439,8 +449,8 @@ public:
 		size_t offset, outSizeProcessed;
 		SRes res = SzArEx_Extract(&db, &lookStream.s, fileIndex, &blockIndex, &outBuffer, &outBufferSize,
 			&offset, &outSizeProcessed, &allocImp, &allocImp);
+		memcpy(buf, outBuffer + offset, fileSize);
 		delete outBuffer;
-		memcpy(buf, outBuffer, outBufferSize);
 		return true;
 	}
 };
@@ -546,7 +556,8 @@ extern "C" int WINAPI GetFileInfo(LPSTR buf, long len, LPSTR filename, unsigned 
 	}
 
 	tArchive *arc = GetArchive(buf);
-	if (!arc) return 8;
+	if (!arc)
+		return 8;
 	auto it = arc->FileIdxByName.find(szName);
 	if (it == arc->FileIdxByName.end()) return 8;
 	*lpInfo = *it->second;
@@ -560,9 +571,11 @@ extern "C" int WINAPI GetFile(LPSTR src, long len, LPSTR dest, unsigned int flag
 	}
 
 	tArchive *arc = GetArchive(src);
-	if (!arc) return 8;
+	if (!arc)
+		return 8;
 	fileInfo *info = arc->GetFileInfo(len);
-	if (!info) return 8;
+	if (!info)
+		return 8;
 
 	if (0x0000 == (flag & 0x0700)) {			// output is file
 		return 0;
@@ -575,7 +588,7 @@ extern "C" int WINAPI GetFile(LPSTR src, long len, LPSTR dest, unsigned int flag
 			if (NULL == (pBuf = LocalLock(hBuf))) {
 				LocalFree(hBuf);
 				return 5;
-			} else if (arc->GetFileData(info, pBuf)){
+			} else if (arc->_GetFileData(info, pBuf)){
 				LocalUnlock(hBuf);
 				*((HANDLE*)dest) = hBuf;
 				return 0;
@@ -588,6 +601,30 @@ extern "C" int WINAPI GetFile(LPSTR src, long len, LPSTR dest, unsigned int flag
 	} else {
 		return -1;
 	}
+
+	return 0;
+}
+
+extern "C" int WINAPI IsSupported(LPSTR filename, DWORD dw)
+{
+	TAR_HEADER tar_header;
+
+	if (0 == (HIWORD(dw))) {
+		DWORD n;
+		if (!ReadFile((HANDLE)dw, &tar_header, sizeof(tar_header), &n, NULL)) {
+			return 0;
+		}
+	} else {
+		memcpy(&tar_header, (void*)dw, sizeof(tar_header));
+	}
+
+	unsigned int checksum = parseOctNum(tar_header.dbuf.chksum, sizeof(tar_header.dbuf.chksum));
+	if (checksum == tar_header.compsum() || (int)checksum == tar_header.compsum_oldtar()) {
+		return 1; // tar
+	}
+
+	if (tar_header.dummy[0] == 'P' && tar_header.dummy[1] == 'K') return 1; // zip
+	if (tar_header.dummy[0] == '7' && tar_header.dummy[1] == 'z') return 1; // zip
 
 	return 0;
 }

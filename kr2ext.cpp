@@ -89,3 +89,29 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 {
     return TRUE;
 }
+
+extern "C" int WINAPI GetPluginInfo(int infono, LPSTR buf, int buflen) {
+	int nRet = 0;
+
+	if (0 == infono) {
+		memcpy(buf, "00AM", nRet = min(buflen, 5));
+	} else if (1 == infono) {
+		const char *pPluginName = "Archive support";
+		memcpy(buf, pPluginName, nRet = min((unsigned int)buflen, strlen(pPluginName) + 1));
+	} else {
+		const char *ppExtNames[] = { "*.tar;*.zip;*.7z;*.xp3;" };
+		const char *ppFmtNames[] = { "tar/zip format" };
+		int nExtNum = sizeof(ppExtNames) / sizeof(ppExtNames[0]);
+		infono -= 2;
+		if (infono >= nExtNum * 2) {
+			return 0;
+		}
+		if (0 == (infono & 1)) {
+			memcpy(buf, ppExtNames[infono >> 1], nRet = min((unsigned int)buflen, strlen(ppExtNames[infono >> 1]) + 1));
+		} else {
+			memcpy(buf, ppFmtNames[infono >> 1], nRet = min((unsigned int)buflen, strlen(ppFmtNames[infono >> 1]) + 1));
+		}
+	}
+
+	return nRet;
+}

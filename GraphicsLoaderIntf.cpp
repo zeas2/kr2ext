@@ -21,15 +21,15 @@
 
 struct VCLCallRouter {
 	void *callbackdata;
-	tTVPMetaInfoPushCallback_r metainfopushcallback;
-	tTVPGraphicSizeCallback_r sizecallback;
-	tTVPGraphicScanLineCallback_r scanlinecallback;
+	tTVPMetaInfoPushCallbackVCL metainfopushcallback;
+	tTVPGraphicSizeCallbackVCL sizecallback;
+	tTVPGraphicScanLineCallbackVCL scanlinecallback;
 
 	VCLCallRouter(
 		void * data,
-		tTVPGraphicSizeCallback_r f1,
-		tTVPGraphicScanLineCallback_r f2,
-		tTVPMetaInfoPushCallback_r f3)
+		tTVPGraphicSizeCallbackVCL f1,
+		tTVPGraphicScanLineCallbackVCL f2,
+		tTVPMetaInfoPushCallbackVCL f3)
 	: callbackdata(data)
 	, sizecallback(f1)
 	, scanlinecallback(f2)
@@ -37,76 +37,87 @@ struct VCLCallRouter {
 	{}
 };
 
-static __declspec(naked) void *__fastcall VCLCallRouter_ScanLineCallback(void *callbackdata, tjs_int y) {
+static __declspec(naked) void *VCLCallRouter_ScanLineCallback(void *callbackdata, tjs_int y) {
 	__asm {
-		; mov edx, edx
+		mov ecx, [esp + 4]
+		mov edx, [esp + 8]
 		mov eax, [ecx]
 		call[ecx + 0Ch]
 		retn
 	}
 }
 
-static void __declspec(naked) __fastcall VCLCallRouter_SizeCallback(void *callbackdata, tjs_uint w, tjs_uint h) {
+// static void *VCLCallRouter_ScanLineCallback(void *callbackdata, tjs_int y) {
+// 	VCLCallRouter* router = (VCLCallRouter*)callbackdata;
+// 	return router->scanlinecallback(y, router->callbackdata);
+// }
+
+static void __declspec(naked) VCLCallRouter_SizeCallback(void *callbackdata, tjs_uint w, tjs_uint h) {
 	__asm {
 		push ebp
 		mov ebp, esp
 		push ebx
-		mov ebx, ecx
-		mov ecx, [ebp + 8]
-		;mov edx, edx
+		mov ebx, [ebp + 8]
+		mov edx, [ebp + 0Ch]
+		mov ecx, [ebp + 10h]
 		mov eax, [ebx]
 		call [ebx + 8]
 		pop ebx
 		pop ebp
-		retn 4
+		retn
 	}
 }
-static void __declspec(naked) __fastcall VCLCallRouter_MetaInfoPushCallback(void *callbackdata, const ttstr & name, const ttstr & value) {
+// static void VCLCallRouter_SizeCallback(void *callbackdata, tjs_uint w, tjs_uint h) {
+// 	VCLCallRouter* router = (VCLCallRouter*)callbackdata;
+// 	return router->sizecallback(h, w, router->callbackdata);
+// }
+
+static void __declspec(naked) VCLCallRouter_MetaInfoPushCallback(void *callbackdata, const ttstr & name, const ttstr & value) {
 	__asm {
 		push ebp
 		mov ebp, esp
 		push ebx
-		mov ebx, ecx
-		mov ecx, [ebp + 8]
+		mov ebx, [ebp + 8]
+		mov edx, [ebp + 0Ch]
+		mov ecx, [ebp + 10h]
 		mov eax, [ebx]
 		call [ebx + 4]
 		pop ebx
 		pop ebp
-		retn 4
+		retn
 	}
 }
 
-static tTVPGraphicLoadingHandler PNGHandler;
-static tTVPGraphicLoadingHandler BMPHandler;
-static tTVPGraphicLoadingHandler TLGHandler;
-static tTVPGraphicLoadingHandler JPGHandler;
-static void __declspec(naked) __fastcall VCLCallRouter_PNGHandler() {
-	;
-}
+// static void VCLCallRouter_MetaInfoPushCallback(void *callbackdata, const ttstr & name, const ttstr & value) {
+// 	VCLCallRouter* router = (VCLCallRouter*)callbackdata;
+// 	return router->metainfopushcallback(value, name, router->callbackdata);
+// }
 
+static void* PNGHandler;
+static void* BMPHandler;
+static void* TLGHandler;
+static void* JPGHandler;
 
-static void __fastcall TVPLoadGraphicRoute(
-	tTVPGraphicSizeCallback_r sizecallback,
+static void* TVPInternalLoadGraphicRoute(
+	tTVPGraphicSizeCallback sizecallback,
 	void *callbackdata,
 	tTVPGraphicLoadMode mode,
 	tjs_int32 keyidx,
 	tTJSBinaryStream *src,
-	tTVPMetaInfoPushCallback_r metainfopushcallback,
-	tTVPGraphicScanLineCallback_r scanlinecallback
+	tTVPMetaInfoPushCallback metainfopushcallback,
+	tTVPGraphicScanLineCallback scanlinecallback
 	//,void* formatdata
 	)
 {
-	VCLCallRouter router(callbackdata, sizecallback, scanlinecallback, metainfopushcallback);
-
     tjs_uint64 origSrcPos = src->GetPosition();
 
 	tjs_uint8 magic[16] = {0};
     src->ReadBuffer(magic, sizeof(magic));
     src->SetPosition(origSrcPos);
-#define CALL_LOAD_FUNC_AND_RET(f) f(nullptr/*formatdata*/, &router, VCLCallRouter_SizeCallback, VCLCallRouter_ScanLineCallback, VCLCallRouter_MetaInfoPushCallback, src, keyidx, mode); return;
-#define CALL_HANDLER_AND_RET(f) f(sizecallback, callbackdata, mode, keyidx, src, metainfopushcallback, scanlinecallback); return;
+#define CALL_LOAD_FUNC_AND_RET(f) f(nullptr/*formatdata*/, callbackdata, sizecallback, scanlinecallback, metainfopushcallback, src, keyidx, mode);
+//#define CALL_HANDLER_AND_RET(f) f(sizecallback, callbackdata, mode, keyidx, src, metainfopushcallback, scanlinecallback); return;
 	if(magic[0] == 'B' && magic[1] == 'M') {
-		CALL_HANDLER_AND_RET(BMPHandler);
+		/*CALL_HANDLER_AND_RET*/return (BMPHandler);
 		//CALL_LOAD_FUNC_AND_RET(TVPLoadBMP);
     } else if(
         magic[0] == 0x89 &&
@@ -114,7 +125,7 @@ static void __fastcall TVPLoadGraphicRoute(
         magic[2] == 'N' &&
         magic[3] == 'G'
         ) {
-		CALL_HANDLER_AND_RET(PNGHandler);
+		/*CALL_HANDLER_AND_RET*/return (PNGHandler);
         //CALL_LOAD_FUNC_AND_RET(TVPLoadPNG);
     } else if(
         magic[0] == 'T' &&
@@ -138,7 +149,7 @@ static void __fastcall TVPLoadGraphicRoute(
         magic[2] == 0xFF &&
         magic[3] >= 0xE0 && magic[3] <= 0xEF
         ) {
-		CALL_HANDLER_AND_RET(JPGHandler);
+		/*CALL_HANDLER_AND_RET*/ return (JPGHandler);
 		//CALL_LOAD_FUNC_AND_RET(TVPLoadJPEG);
 	} else if (!memcmp(magic, "RIFF", 4) && !memcmp(magic + 8, "WEBPVP8", 7)){
 		CALL_LOAD_FUNC_AND_RET(TVPLoadWEBP);
@@ -147,8 +158,80 @@ static void __fastcall TVPLoadGraphicRoute(
             TJS_W("Unsupported in-built graphic format."));
     }
 #undef CALL_LOAD_FUNC_AND_RET
+	return nullptr;
 }
 
+
+
+static void __fastcall TVPLoadGraphicRouteVCL(
+	tTVPGraphicSizeCallbackVCL sizecallback,
+	void *callbackdata,
+	tTVPGraphicLoadMode mode,
+	tjs_int32 keyidx,
+	tTJSBinaryStream *src,
+	tTVPMetaInfoPushCallbackVCL metainfopushcallback,
+	tTVPGraphicScanLineCallbackVCL scanlinecallback
+	//,void* formatdata
+	) {
+	VCLCallRouter router(callbackdata, sizecallback, scanlinecallback, metainfopushcallback);
+	void *handler =
+		TVPInternalLoadGraphicRoute(
+		VCLCallRouter_SizeCallback, &router, mode, keyidx, src,
+		VCLCallRouter_MetaInfoPushCallback, VCLCallRouter_ScanLineCallback
+		);
+	if (handler) {
+		((tTVPGraphicLoadingHandlerVCL)handler)(sizecallback, callbackdata,
+			mode, keyidx, src, metainfopushcallback, scanlinecallback);
+	}
+}
+
+static void __cdecl TVPLoadGraphicRouteCdecl(void* formatdata,
+	void *callbackdata,
+	tTVPGraphicSizeCallback sizecallback,
+	tTVPGraphicScanLineCallback scanlinecallback,
+	tTVPMetaInfoPushCallback metainfopushcallback,
+	tTJSBinaryStream *src,
+	tjs_int32 keyidx,
+	tTVPGraphicLoadMode mode)
+{
+	void *handler =
+		TVPInternalLoadGraphicRoute(
+		sizecallback, callbackdata, mode, keyidx, src,
+		metainfopushcallback, scanlinecallback
+		);
+	if (handler) {
+		((tTVPGraphicLoadingHandler)handler)(formatdata, callbackdata,
+			sizecallback, scanlinecallback, metainfopushcallback, src, keyidx, mode);
+	}
+}
+
+static void *_TVPLoadGraphicRouteFunc = nullptr;
+
+static __declspec(naked) void __fastcall TVPLoadGraphicRoute(
+	tTVPGraphicSizeCallbackVCL sizecallback,
+	void *callbackdata,
+	tTVPGraphicLoadMode mode,
+	tjs_int32 keyidx,
+	tTJSBinaryStream *src,
+	tTVPMetaInfoPushCallbackVCL metainfopushcallback,
+	tTVPGraphicScanLineCallbackVCL scanlinecallback
+	//,void* formatdata
+	) {
+	__asm {
+		cmp _TVPLoadGraphicRouteFunc, 0;
+		je InitLoadGraphicRoute;
+		jmp _TVPLoadGraphicRouteFunc;
+	InitLoadGraphicRoute:
+		cmp dword ptr[esp + 08h], 0FFFFFFFFh;
+		je UseVCLFunc;
+	UseCdeclFunc:
+		mov _TVPLoadGraphicRouteFunc, offset TVPLoadGraphicRouteCdecl;
+		jmp _TVPLoadGraphicRouteFunc;
+	UseVCLFunc:
+		mov _TVPLoadGraphicRouteFunc, offset TVPLoadGraphicRouteVCL;
+		jmp _TVPLoadGraphicRouteFunc;
+	}
+}
 // static __declspec(naked) void TVPLoadGraphicRoute(
 // 	void* formatdata,
 // 	void *callbackdata,

@@ -879,9 +879,9 @@ static void ycc_to_rgb24(ColorConvertState *s, uint8_t *dst, const PIXEL *y_ptr,
         y_val = y_ptr[x] * c_one;
         cb_val = cb_ptr[x] - center;
         cr_val = cr_ptr[x] - center;
-        q[0] = clamp8((y_val + c_r_cr * cr_val + rnd) >> shift);
+        q[2] = clamp8((y_val + c_r_cr * cr_val + rnd) >> shift);
         q[1] = clamp8((y_val - c_g_cb * cb_val - c_g_cr * cr_val + rnd) >> shift);
-        q[2] = clamp8((y_val + c_b_cb * cb_val + rnd) >> shift);
+        q[0] = clamp8((y_val + c_b_cb * cb_val + rnd) >> shift);
         q += incr;
     }
 }
@@ -903,9 +903,9 @@ static void ycgco_to_rgb24(ColorConvertState *s,
         y_val = y_ptr[x];
         cb_val = cb_ptr[x] - center;
         cr_val = cr_ptr[x] - center;
-        q[0] = clamp8(((y_val - cb_val + cr_val) * c_one + rnd) >> shift);
+        q[2] = clamp8(((y_val - cb_val + cr_val) * c_one + rnd) >> shift);
         q[1] = clamp8(((y_val + cb_val) * c_one + rnd) >> shift);
-        q[2] = clamp8(((y_val - cb_val - cr_val) * c_one + rnd) >> shift);
+        q[0] = clamp8(((y_val - cb_val - cr_val) * c_one + rnd) >> shift);
         q += incr;
     }
 }
@@ -1019,9 +1019,9 @@ static void rgb_to_rgb24(ColorConvertState *s, uint8_t *dst, const PIXEL *y_ptr,
 
     if (s->bit_depth == 8 && !s->limited_range) {
         for(x = 0; x < n; x++) {
-            q[0] = cr_ptr[x];
+            q[2] = cr_ptr[x];
             q[1] = y_ptr[x];
-            q[2] = cb_ptr[x];
+            q[0] = cb_ptr[x];
             q += incr;
         }
     } else {
@@ -1029,9 +1029,9 @@ static void rgb_to_rgb24(ColorConvertState *s, uint8_t *dst, const PIXEL *y_ptr,
         rnd = s->y_offset;
         shift = s->c_shift;
         for(x = 0; x < n; x++) {
-            q[0] = clamp8((cr_ptr[x] * c + rnd) >> shift);
+            q[2] = clamp8((cr_ptr[x] * c + rnd) >> shift);
             q[1] = clamp8((y_ptr[x] * c + rnd) >> shift);
-            q[2] = clamp8((cb_ptr[x] * c + rnd) >> shift);
+            q[0] = clamp8((cb_ptr[x] * c + rnd) >> shift);
             q += incr;
         }
     }
